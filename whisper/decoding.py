@@ -287,17 +287,22 @@ class GreedyDecoder(TokenDecoder):
         #print(f"tvdbg {logprobs[0][:10]}")
         sorted_tensor, sorted_indices = torch.sort(logprobs[0][:], descending=True)
         print(f"tvdbg values  {sorted_tensor[:10]}")
-        print(f"tvdbg indices {sorted_indices[:10]}")
+        #print(f"tvdbg indices {sorted_indices[:10]}")
         #print("tvdbg {[self.tokenizer.decode([[t.item()]]).strip() for t in sorted_indices[:10]]}")
         #print(f"tvdbg {[self.tokenizer.decode([[t.item()]]).strip() for t in sorted_indices[:10]]}")
         #print(f"tvdbg {[t for t in sorted_indices[:10]]}")
         #tokens1: List[List[int]] = [t[i].tolist() for i, t in zip([selected], tokens)]
         #tokens1 = [50258, 50259, 50359, 50364, 45517,  3165,    74, 21409,  3165,    65,   1373,  4084,   257,  6465,    44,   281,   536,   437,   264, 11150, 2709,   505,   257,  2099,  3636,   337,  4997,    13, 50964, 50257]
         tokens1: List[List[int]] = [t.item() for t in sorted_indices[:10]]
-        print(f"tvdbg {type(tokens1)} {tokens1}")
-        #texts: List[str] = [self.tokenizer.decode(t).strip() for t in [tokens1]]
-        texts: List[str] = [self.tokenizer.decode(t) for t in [tokens1]]
+        print(f"tvdbg {type(tokens1)} tokens1={tokens1}")
+        texts: List[str] = [self.tokenizer.decode(t).strip() for t in [tokens1]]
         print(texts)
+        
+        #for t in sorted_indices[:10]:
+        #    tokens1 = [50258, 50259, 50359, 14, 15]
+        #    #            tokens1.append(t.item)
+        #    texts: List[str] = [self.tokenizer.decode(t) for t in [tokens1]]
+        #    print(t, texts)
 
 
         current_logprobs = logprobs[torch.arange(logprobs.shape[0]), next_tokens]
